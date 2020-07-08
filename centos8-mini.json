@@ -1,0 +1,49 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": ""
+  },
+
+  "builders": [
+    {
+      "type": "qemu",
+      "headless": true,
+      "iso_url": "file:///home/tomas@solamail.no/Documents/iso/CentOS-8.1.1911-x86_64-dvd1.iso",
+      "iso_checksum": "8d0573c5fb5444007936b652d8c6724d",
+      "iso_checksum_type": "md5",
+      "output_directory": "output_centos8",
+      "shutdown_command": "echo 'packer' | sudo -S shutdown -P now",
+      "vnc_bind_address": "0.0.0.0",
+      "machine_type": "pc-q35-4.2",
+      "cpus": 2,
+      "memory": 4096,
+      "disk_cache": "none",
+      "disk_interface": "virtio",
+      "disk_size": "20000",
+      "format": "qcow2",
+      "net_device": "virtio-net-pci",
+      "accelerator": "kvm",
+      "http_directory": "ksfiler",
+      "ssh_username": "root",
+      "ssh_password": "hemmelig",
+      "ssh_timeout": "10m",
+      "vm_name": "tplco8-mini",
+      "net_device": "virtio-net",
+      "boot_wait": "10s",
+      "boot_command": [
+        "<home><wait><tab> text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos8-mini.cfg<enter><wait>"
+      ]
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 30",
+        "yum -q -y update",
+        "yum -q -y install vim"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": ""
+  },
+
+  "builders": [
+    {
+      "type": "qemu",
+      "headless": true,
+      "iso_url": "file:///home/tomas@solamail.no/Documents/iso/ubuntu-20.04-live-server-amd64.iso",
+      "iso_checksum": "f03d31c11136e24c10c705b7b3efc39f",
+      "iso_checksum_type": "md5",
+      "output_directory": "output_ubuntu20",
+      "shutdown_command": "",
+      "vnc_bind_address": "0.0.0.0",
+      "machine_type": "pc-q35-4.2",
+      "cpus": 4,
+      "memory": 4096,
+      "disk_cache": "none",
+      "disk_interface": "virtio",
+      "disk_size": "25000",
+      "format": "qcow2",
+      "net_device": "virtio-net-pci",
+      "accelerator": "kvm",
+      "http_directory": "ksfiler",
+      "ssh_username": "sysop",
+      "ssh_password": "insecure",
+      "ssh_timeout": "20m",
+      "vm_name": "tplu20",
+      "net_device": "virtio-net",
+      "boot_wait": "4s",
+      "boot_command": [
+        "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "/install/vmlinuz<wait>",
+        " initrd=/install/initrd.gz",
+        " auto-install/enable=true",
+        " debconf/priority=critical",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu20.cfg<wait>",
+        " -- <wait>",
+        "<enter><wait>"
+      ]
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 10"
+      ]
+    }
+  ]
+}

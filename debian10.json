@@ -1,0 +1,47 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": ""
+  },
+
+  "builders": [
+    {
+      "type": "qemu",
+      "headless": true,
+      "iso_url": "file:///home/tomas@solamail.no/Documents/iso/debian-10.3.0-amd64-netinst.iso",
+      "iso_checksum": "5956434be4b81e6376151b64ef9b1596",
+      "iso_checksum_type": "md5",
+      "output_directory": "output_debian10",
+      "shutdown_command": "",
+      "vnc_bind_address": "0.0.0.0",
+      "machine_type": "pc-q35-4.2",
+      "cpus": 2,
+      "memory": 4096,
+      "disk_cache": "none",
+      "disk_interface": "virtio",
+      "disk_size": "20000",
+      "format": "qcow2",
+      "net_device": "virtio-net-pci",
+      "accelerator": "kvm",
+      "http_directory": "ksfiler",
+      "ssh_username": "sysop",
+      "ssh_password": "insecure",
+      "ssh_timeout": "20m",
+      "vm_name": "tpldeb10",
+      "net_device": "virtio-net",
+      "boot_wait": "10s",
+      "boot_command": [
+        "<esc><wait>auto url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian.cfg<enter><wait>"
+      ]
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 10"
+      ]
+    }
+  ]
+}
