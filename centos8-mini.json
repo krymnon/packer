@@ -25,7 +25,7 @@
       "accelerator": "kvm",
       "http_directory": "ksfiler",
       "ssh_username": "root",
-      "ssh_password": "hemmelig",
+      "ssh_password": "changeme",
       "ssh_timeout": "10m",
       "vm_name": "tplco8-mini",
       "net_device": "virtio-net",
